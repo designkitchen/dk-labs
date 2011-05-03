@@ -1,0 +1,13 @@
+exclude: ["README.md"]
+destination: public
+permalink: /:title
+pygments: true
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+<menu>
+	<h3>Recent Labs</h3>
+	<ul id="recent-labs">
+		{% for post in site.posts limit:10 %}
+		<li><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+		{% endfor %}
+	</ul>
+
+	<h3>Topics</h3>
+	<ul id="topics">
+		{% for category in site.categories %}
+		<li><a href="/categories/{{ category[0] }}">{{ category[0] }}</a></li>
+		{% endfor %}
+	</ul>
+	</menu>
