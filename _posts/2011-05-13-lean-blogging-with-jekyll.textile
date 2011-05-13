@@ -1,0 +1,177 @@
+---
+title: Lean Blogging with Jekyll
+layout: default
+author: Todd Larsen
+categories:
+- ruby
+- jekyll
+---
+
+p(date). May 13, 2011
+
+h2. {{ page.title }}
+
+h6. by {{ page.author }}
+
+p. <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> is a Ruby "blog-aware" static site generator. Jekyll reads a config file, parses Textile files and layout directives, and spits out a completely static site, ready for deployment. 
+
+p. You don't need a database or any sort of application layer but still get the benefit of includes and can easily extend Jekyll for more advanced features. A Jekyll blog is easy to update and deploy with the fewest points of failure possible. All you need is a web server that can handle static files. 
+
+p. The rest of this post assumes an OS X environment but most of it would apply to any other Unix-based OS too. You'll need to open @Terminal.app@ to run the following commands and work with Jekyll. The first step just covers installing RubyGems so if you're already up-to-speed on that, skip to <a href="#step2">Step 2</a>.  
+
+
+h4. Step 1: Prepare
+
+p. If you don't already have RubyGems, you'll need to install it:
+
+{% highlight bash %}
+curl -O http://files.rubyforge.vm.bytemark.co.uk/rubygems/rubygems-1.3.5.tgz
+{% endhighlight %}
+
+p. Then, find out where Ruby is installed on your system:
+
+{% highlight bash %}
+which ruby
+{% endhighlight %}
+
+p. Take note of the path that is printed out - you'll need to reference it below when running RubyGems' @setup.rb@. More than likely it will be @/usr/local/bin/ruby@ or @/usr/bin/ruby@.
+
+{% highlight bash %}
+tar xzvf rubygems-1.3.5.tgz
+cd rubygems-1.3.5
+sudo /usr/local/bin/ruby setup.rb
+{% endhighlight %}
+
+
+h4(#step2). Step 2: Install
+
+p. Now we can install the Jekyll gem and it's dependencies.
+
+{% highlight bash %}
+gem install jekyll
+{% endhighlight %}
+
+p. RedCloth is used to help parse the Textile files. Note that RedCloth must be typed in CamelCase or you'll receive an error. 
+
+{% highlight bash %}
+gem install RedCloth
+{% endhighlight %}
+
+p. Finally, install Pygments. It's a syntax highlighter written in Python, so we'll use @pip@ to install it. If you don't already have @pip@ installed:
+
+{% highlight bash %}
+brew install pip && pip install pygments
+{% endhighlight %}
+
+p. Or, if you don't have <a href="https://github.com/mxcl/homebrew/wiki/installation">HomeBrew</a>:
+
+{% highlight bash %}
+easy_install pip && pip install pygments
+{% endhighlight %}
+
+p. If @pip@ is already installed, use it to install Pygments:
+
+{% highlight bash %}
+pip install pygments
+{% endhighlight %}
+
+
+h4. Step 3: Setup
+
+p. Jekyll's directory structure is pretty open-ended but does require a few core directories to orient itself. Here's an example directory structure that is used for Labs: 
+
+{% highlight bash %}
+_includes/
+_layouts/
+_plugins/
+_posts/
+images/
+javascripts/
+stylesheets/
+README.md
+_config.yml
+index.html
+meet-the-team.html
+{% endhighlight %}
+
+
+p. Jekyll runs through these directories to assemble the final static output. It gathers all of the files in @_posts/@ and renders each post into a specified layout within @_layouts/@. If there are any include references in @_layouts/@, Jekyll looks to @_includes/@ and inserts them accordingly. Custom Jekyll extensions are stored in @_plugins/@ and automagically work at Jekyll runtime.  
+
+h5. YAML Front Matter
+
+p. Part of Jekyll's magic is determined by metadata at the top of each file called a front matter block. This block of YAML tells Jekyll which layouts to use, which categories are present, who authors a blog post, and any other useful information. Front matter blocks can contain basically anything and offer the most opportunity for extending Jekyll with new features. 
+
+p. Here's the front matter block for this post:
+
+{% highlight bash %}
+--- 
+title: Lean Blogging with Jekyll
+layout: default
+author: Todd Larsen
+categories:
+- ruby
+- jekyll
+---
+{% endhighlight %}
+
+h5. Create a Blog Post
+
+p. Publishing a new blog post is as simple as creating a new Textile file in the @_posts/@ directory with the post's title prefixed by the published date:
+
+{% highlight bash %}
+2011-05-13-lean-blogging-with-jekyll.textile
+{% endhighlight %}
+
+p. Textile allows you to write your post using <a href="http://thresholdstate.com/articles/4312/the-textile-reference-manual?ch=6">shorthand markup</a> if you choose, but you can also just use vanilla HTML. 
+
+h4. Step 4: Configure
+
+p. Here's the @_config.yml@ file for Labs. Most of the default <a href="https://github.com/mojombo/jekyll/wiki/configuration">options</a> should suffice, but for Labs I'm overriding 4 settings. You'll notice that I exclude the repo README from Jekyll's output. Add any files that you keep in your Jekyll root but don't want to deploy to the @exclude@ array. The output folder will be named @public@ and syntax highlighting with @pygments@ is turned on. 
+
+{% highlight bash %}
+exclude: ["README.md"]
+destination: public
+permalink: /:title
+pygments: true
+{% endhighlight %}
+
+
+h4. Step 5: Run
+
+p. Now that we have Jekyll installed, the proper directory structure in place and some content, it's time to let Jekyll work it's magic. 
+
+p. By running the default command, Jekyll will get it's instructions from _config.yml and generate your static site, ready for deployment:
+
+{% highlight bash %}
+jekyll
+{% endhighlight %}
+
+p. But maybe you want to preview a new blog post you've just written before actually deploying to production:
+
+{% highlight bash %}
+jekyll --server 
+{% endhighlight %}
+
+p. Flagging jekyll with @server@ reads the config file and generates the static site like usual, but also starts up a local WEBrick server instance on 0.0.0.0 port 4000 by default.
+
+p. If you need to do extensive development on your site and don't want to run Jekyll repeatedly after each change, an @auto@ flag will monitor file changes and automatically regenerate the static site files every second:
+
+{% highlight bash %}
+jekyll --server --auto
+{% endhighlight %}
+
+
+h3. Plugins
+
+p. One of the most exciting aspects of Jekyll is how easily it can be extended. You can write your own plugins in Ruby to add features to your site. For Labs, I cloned a <a href="http://recursive-design.com/projects/jekyll-plugins/">category plugin</a> that reads through each post's YAML data and generates basic sitewide taxonomy. 
+
+
+
+
+
+
+
+
+
+
+
