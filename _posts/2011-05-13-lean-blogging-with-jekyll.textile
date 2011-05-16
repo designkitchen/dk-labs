@@ -15,17 +15,17 @@ h6. by {{ page.author }}
 
 p. <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> is a Ruby "blog-aware" static site generator. Jekyll reads a config file, parses Textile files and layout directives, and spits out a completely static site, ready for deployment. 
 
-p. You don't need a database or any sort of application layer but still get the benefit of includes and can easily extend Jekyll for more advanced features. A Jekyll blog is easy to update and deploy with the fewest points of failure possible. All you need is a web server that can handle static files. 
+p. You don't need a database or any sort of application layer but still get the benefit of includes and can easily extend Jekyll for more advanced features. A Jekyll blog is just about the leanest you can get with the fewest points of failure possible. All you need is a web server that can handle static files. 
 
 p. The rest of this post assumes an OS X environment but most of it would apply to any other Unix-based OS too. You'll need to open @Terminal.app@ to run the following commands and work with Jekyll. The first step just covers installing RubyGems so if you're already up-to-speed on that, skip to <a href="#step2">Step 2</a>.  
 
 
 h4. Step 1: Prepare
 
-p. If you don't already have RubyGems, you'll need to install it:
+p. If you don't use <a href="https://rvm.beginrescueend.com/">RVM</a>, you may need to prepend some of the following commands with @sudo@. If you don't already have RubyGems, you'll need to install it:
 
 {% highlight bash %}
-curl -O http://files.rubyforge.vm.bytemark.co.uk/rubygems/rubygems-1.3.5.tgz
+curl -O http://files.rubyforge.vm.bytemark.co.uk/rubygems/rubygems-1.3.7.tgz
 {% endhighlight %}
 
 p. Then, find out where Ruby is installed on your system:
@@ -37,12 +37,12 @@ which ruby
 p. Take note of the path that is printed out - you'll need to reference it below when running RubyGems' @setup.rb@. More than likely it will be @/usr/local/bin/ruby@ or @/usr/bin/ruby@.
 
 {% highlight bash %}
-tar xzvf rubygems-1.3.5.tgz
-cd rubygems-1.3.5
+tar xzvf rubygems-1.3.7.tgz
+cd rubygems-1.3.7
 sudo /usr/local/bin/ruby setup.rb
 {% endhighlight %}
 
-p. Otherwise, you'll just need to make sure RubyGems is up-to-date.
+p. Otherwise, you'll just need to make sure RubyGems is at 1.3.7 or higher.
 
 {% highlight bash %}
 gem update --system
@@ -57,25 +57,25 @@ p. Now we can install the Jekyll gem and it's dependencies.
 gem install jekyll
 {% endhighlight %}
 
-p. RedCloth is used to help parse the Textile files. Note that RedCloth must be typed in CamelCase or you'll receive an error. 
+p. Jekyll will automatically install most of it's dependencies, but you'll have to manually install RedCloth to help parse the Textile files. Note that RedCloth must be typed in Upper CamelCase or you'll receive an error. 
 
 {% highlight bash %}
 gem install RedCloth
 {% endhighlight %}
 
-p. Finally, install Pygments. It's a syntax highlighter written in Python, so we'll use @pip@ to install it. If you don't already have @pip@ installed:
+p. Finally, install Pygments. It's a syntax highlighter for code snippets written in Python, so we'll use @pip@ to install it. If you don't already have @pip@ installed:
 
 {% highlight bash %}
-brew install pip && pip install pygments
+brew install pip
 {% endhighlight %}
 
 p. Or, if you don't have <a href="https://github.com/mxcl/homebrew/wiki/installation">HomeBrew</a>:
 
 {% highlight bash %}
-easy_install pip && pip install pygments
+easy_install pip
 {% endhighlight %}
 
-p. If @pip@ is already installed, use it to install Pygments:
+p. Once @pip@ is installed, use it to install Pygments:
 
 {% highlight bash %}
 pip install pygments
@@ -99,7 +99,6 @@ _config.yml
 index.html
 meet-the-team.html
 {% endhighlight %}
-
 
 p. Jekyll runs through these directories to assemble the final static output. It gathers all of the files in @_posts/@ and renders each post into a specified layout within @_layouts/@. If there are any include references in @_layouts/@, Jekyll looks to @_includes/@ and inserts them accordingly. Custom Jekyll extensions are stored in @_plugins/@ and automagically work at Jekyll runtime.  
 
@@ -128,7 +127,7 @@ p. Publishing a new blog post is as simple as creating a new Textile file in the
 2011-05-13-lean-blogging-with-jekyll.textile
 {% endhighlight %}
 
-p. Textile allows you to write your post using <a href="http://thresholdstate.com/articles/4312/the-textile-reference-manual?ch=6">shorthand markup</a> if you choose, but you can also just use vanilla HTML. 
+p. Textile allows you to write your post using <a href="http://thresholdstate.com/articles/4312/the-textile-reference-manual?ch=6">shorthand markup</a> if you choose, but you can also just use vanilla HTML. Take a look at the file for <a href="https://github.com/designkitchen/dk_labs/raw/master/_posts/2011-05-13-lean-blogging-with-jekyll.textile">this post</a> on GitHub as an example. 
 
 h4. Step 4: Configure
 
@@ -158,7 +157,7 @@ p. But maybe you want to preview a new blog post you've just written before actu
 jekyll --server 
 {% endhighlight %}
 
-p. Flagging jekyll with @server@ reads the config file and generates the static site like usual, but also starts up a local WEBrick server instance on 0.0.0.0 port 4000 by default.
+p. Flagging jekyll with @server@ reads the config file and generates the static site like usual, but also starts up a local WEBrick server instance on localhost port 4000 by default.
 
 p. If you need to do extensive development on your site and don't want to run Jekyll repeatedly after each change, an @auto@ flag will monitor file changes and automatically regenerate the static site files every second:
 
@@ -172,8 +171,9 @@ h3. Plugins
 p. One of the most exciting aspects of Jekyll is how easily it can be extended. You can write your own plugins in Ruby to add features to your site. For Labs, I cloned a <a href="http://recursive-design.com/projects/jekyll-plugins/">category plugin</a> that reads through each post's YAML data and generates basic sitewide taxonomy. 
 
 
+h3. Conclusion 
 
-
+p. You should now have a basic understanding of how Jekyll works, and how you can create a lean blog without the bloat and risk of WordPress or a 3rd-party service like Tumblr.  
 
 
 
