@@ -5,6 +5,8 @@ author: Todd Larsen
 categories:
 - ruby
 - jekyll
+excerpt: |-
+  Jekyll is a Ruby "blog-aware" static site generator. Jekyll reads a config file, parses Textile files and layout directives, and spits out a completely static site, ready for deployment. You don't need a database or any sort of application layer but still get the benefit of includes and can easily extend Jekyll for more advanced features. A Jekyll blog is just about the leanest you can get with the fewest points of failure possible. All you need is a web server that can handle static files.
 ---
 
 p(date). May 13, 2011

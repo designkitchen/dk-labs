@@ -1,12 +1,28 @@
 ---
-layout: default
-title: Recent
+layout: home
+title: DK Labs | Home
 ---
-{% for post in site.posts limit:10 %}
-<date>{{ post.date | date: '%B' }} {{ post.date | date: '%e' }}, {{ post.date | date: '%Y' }}</date>
-<h2><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
-<p>{{ post.excerpt }}</p>
-{% endfor %}
+
+<div class="one">
+	<div class="intro-pages">
+		<h3>DK Labs is where <a href="http://designkitchen.com">Designkitchen</a>'s developers share their experiments with emerging technology.</h3>
+	</div>
+</div><!-- end .one -->
+
+<div class="one">
+	<div class="one-fourth">
+			{% include menu.html %}
+	</div>
+	
+	<div class="inner-content last">
+		{% for post in site.posts limit:10 %}
+		<date>{{ post.date | date: '%B' }} {{ post.date | date: '%e' }}, {{ post.date | date: '%Y' }}</date>
+		<h2><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+		<p>{{ post.excerpt }}</p>
+		{% endfor %}
+	</div>
+</div>
+
 
 
 
