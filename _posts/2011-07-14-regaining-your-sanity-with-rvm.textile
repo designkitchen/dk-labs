@@ -1,0 +1,18 @@
+---
+title: Regaining your sanity with RVM
+layout: default
+author: Daniel Mackey
+categories:
+- ruby
+- rvm
+- gems
+- command
+excerpt: |-
+  Use RVM to keep your projects, rubies, gems, and brain cells where they need to be without contaminating them all.
+---
+
+p(date). July 14, 2011
+
+h2. {{ page.title }}
+
+h6. by {{ page.author }}
