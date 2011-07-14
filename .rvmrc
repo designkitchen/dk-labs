@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+environment_id="1.9.2@dk-labs"
+rvm --create  "$environment_id"
+
+# Ensure that Bundler is installed, install it if it is not.
+if ! command -v bundle ; then
+  gem install bundler
+fi
+
+# Bundle while redcing excess noise.
+bundle | grep -v 'Using' | grep -v 'complete' | sed '/^$/d'
